@@ -6,23 +6,36 @@ using UnityEngine.Networking;
 public class SpawnedObject : NetworkBehaviour
 {
 	public float Speed;
-	private Rigidbody2D body;
+	public float MaxTravelDistance;
+	private Vector2 LastPosition;
+    private float DistanceTravelled;
 
 	public SpawnedObject()
 	{
 		Speed = 1f;
+		MaxTravelDistance = 100.0f;
 	}
 
     // Start is called before the first frame update
     void Start()
     {
-		body = GetComponent<Rigidbody2D>();
-		body.velocity = Speed * (Quaternion.Euler(0, 0, Random.Range(0, 360f)) * Vector2.right);
+		LastPosition = transform.position;
+        DistanceTravelled = 0.0f;
     }
+
+	public void SetMovementDirection(Vector2 direction)
+	{
+		GetComponent<Rigidbody2D>().velocity = Speed * direction;
+	}
 
     // Update is called once per frame
     void Update()
     {
-		
+        Vector2 curPosition = (Vector2)transform.position;
+		float curTravelDistance = (curPosition - LastPosition).magnitude;
+        DistanceTravelled += curTravelDistance;
+		if (DistanceTravelled > MaxTravelDistance)
+			Destroy(this.gameObject);
+        LastPosition = curPosition;
     }
 }

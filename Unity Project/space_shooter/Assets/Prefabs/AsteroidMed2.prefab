@@ -296,7 +296,12 @@ PrefabInstance:
     - target: {fileID: 4410386863023539770, guid: 9979cba2b5e4ec64cb682a6b0d5dc3c9,
         type: 3}
       propertyPath: Speed
-      value: 1.7
+      value: 2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4410386863023539770, guid: 9979cba2b5e4ec64cb682a6b0d5dc3c9,
+        type: 3}
+      propertyPath: MaxTravelDistance
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9979cba2b5e4ec64cb682a6b0d5dc3c9, type: 3}

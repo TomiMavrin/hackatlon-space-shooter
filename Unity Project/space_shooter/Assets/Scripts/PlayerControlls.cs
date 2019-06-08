@@ -5,38 +5,44 @@ using UnityEngine.Networking;
 
 public class PlayerControlls : NetworkBehaviour {
 
-    public Camera playerCamera;
-    public GameObject playerSprite;
-    private float speed;
-    public float maxSpeed;
-    public float acceleration;
-    public float deAcceleration;
+    private Camera playerCamera;
+    public float maxSpeed = 2.0f;
+    private Rigidbody2D body;
+    public float thrust = 25.0f;
 
     private void Start() {
+        /*
         if (isLocalPlayer) {
             playerCamera.gameObject.SetActive(true);
         }
         else {
             playerCamera.gameObject.SetActive(false);
-        }
+        }*/
+        body = GetComponent<Rigidbody2D>();
+        playerCamera = FindObjectOfType<Camera>();
     }
 
     void Update() {
-
         if (isLocalPlayer == true) {
+            Vector2 newDirection = (playerCamera.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, newDirection);
+            playerCamera.transform.position = transform.position + Vector3.back;
 
-            if (Input.GetKey(KeyCode.W)) {
-                speed = Mathf.Min(maxSpeed, speed + acceleration * Time.deltaTime);
-                //todo finish acceleration 
+            float forward = (Input.GetKey(KeyCode.W)) ? 1.0f : 0.0f;
+            float left = ((Input.GetKey(KeyCode.A)) ? 1.0f : 0.0f) - ((Input.GetKey(KeyCode.D)) ? 1.0f : 0.0f);
+
+            if (forward != 0.0f || left != 0.0f) {
+                float angle = Mathf.Atan2(left, forward) * Mathf.Rad2Deg;
+                newDirection = Quaternion.Euler(0, 0, angle) * newDirection;
+
+                body.AddForce(newDirection * thrust);
             }
-            if (Input.GetKey(KeyCode.A)) {
-                this.transform.Translate(Vector3.left * Time.deltaTime * 3f);
+            Vector2 velocity = body.velocity;
+            float velocityMag = velocity.magnitude;
+            if (velocityMag > maxSpeed) {
+                body.velocity = velocity.normalized * maxSpeed;
             }
         }
-
-        Vector3 mousePos = playerCamera.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 perpendicular = mousePos - transform.position;
-        playerSprite.transform.rotation = Quaternion.LookRotation(Vector3.forward, perpendicular);
     }
 
 }
