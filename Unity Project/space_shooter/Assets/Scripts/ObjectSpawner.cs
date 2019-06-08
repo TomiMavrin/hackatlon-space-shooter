@@ -19,13 +19,13 @@ public class ObjectSpawner : NetworkBehaviour
 		Angle = 45.0f;
 	}
 
-    
+    /*
 	public void OnDrawGizmosSelected()
 	{
         UnityEditor.Handles.color = Color.cyan;
         UnityEditor.Handles.DrawWireArc(transform.position, Vector3.back, transform.rotation * Vector3.right, -Angle, Radius);
 	}
-    
+    */
 
 	void Start()
     {
@@ -45,21 +45,21 @@ public class ObjectSpawner : NetworkBehaviour
 
 	SpawnedObject SpawnObject()
 	{
-		float distance = Random.Range(0f, Radius);
-		Vector2 position = transform.position + transform.rotation * (Quaternion.Euler(0, 0, Random.Range(0, Angle)) * Vector2.right) * distance;
-		int objectIdx = Random.Range(0, objectList.Length);
-		if (objectList[objectIdx] != null)
-		{
-			SpawnedObject obj = Instantiate(objectList[objectIdx], position, Quaternion.Euler(0, 0, Random.Range(0, 360f)));
-            obj.SetMovementDirection(transform.rotation * (Quaternion.Euler(0, 0, Random.Range(0, Angle)) * Vector2.right));
-            return obj;
-        }
+		
         return null;
 	}
 
 	[Command]
 	void CmdSpawnObject()
 	{
-        NetworkServer.Spawn(SpawnObject().gameObject);
+        float distance = Random.Range(0f, Radius);
+        Vector2 position = transform.position + transform.rotation * (Quaternion.Euler(0, 0, Random.Range(0, Angle)) * Vector2.right) * distance;
+        int objectIdx = Random.Range(0, objectList.Length);
+        if (objectList[objectIdx] != null) {
+            SpawnedObject obj = Instantiate(objectList[objectIdx], position, Quaternion.Euler(0, 0, Random.Range(0, 360f)));
+            NetworkServer.Spawn(obj.gameObject);
+            obj.SetMovementDirection(transform.rotation * (Quaternion.Euler(0, 0, Random.Range(0, Angle)) * Vector2.right));
+            
+        }
 	}
 }

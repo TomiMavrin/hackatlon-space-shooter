@@ -13,6 +13,8 @@ public class MainMenuUI : MonoBehaviour
 
     [SerializeField] Text ipAddress;
 
+    public GameObject winnerPanel;
+
     NetworkManager networkM;
         
     public void Start() {
@@ -26,10 +28,21 @@ public class MainMenuUI : MonoBehaviour
         SceneManager.LoadScene("ShipCustomMenu");
     }
 
+    public void RespawnPlayer(PlayerControlls p) {
+        StartCoroutine(Respawn(p));
+    }
+
+    IEnumerator Respawn(PlayerControlls p) {
+        yield return new WaitForSeconds(3f);
+        p.gameObject.SetActive(true);
+        p.transform.position = p.spawnPosition;
+    }
 
     public void OnHostButton() {
         networkM.StartHost();
     }
+
+ 
 
     public void OnJoinGameButton() {
         if (ipAddress.text == "") {

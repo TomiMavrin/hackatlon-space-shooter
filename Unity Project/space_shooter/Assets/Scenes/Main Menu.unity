@@ -1284,7 +1284,17 @@ MonoBehaviour:
   m_PlayerSpawnMethod: 1
   m_OfflineScene: Main Menu
   m_OnlineScene: Game Scene
-  m_SpawnPrefabs: []
+  m_SpawnPrefabs:
+  - {fileID: 1842244553713066703, guid: 9979cba2b5e4ec64cb682a6b0d5dc3c9, type: 3}
+  - {fileID: 2437455462846167029, guid: ea0a2a329dba2d645ae3cb0b3da560e7, type: 3}
+  - {fileID: 6605448430848753831, guid: c43c783d818fea24e9675fc2782919ff, type: 3}
+  - {fileID: 7295954790072410199, guid: 592ef8caa8b875942a246dce63ac0c36, type: 3}
+  - {fileID: 509073140163645979, guid: d84aa7830bd167746abceffea07cbc23, type: 3}
+  - {fileID: 7085795661904127150, guid: 592d7400d2edbce4b8389b6cf05a2f02, type: 3}
+  - {fileID: 5000962522965061622, guid: fee0965d5461b994abd90f36dab45eff, type: 3}
+  - {fileID: 8255957944268836092, guid: 9ff897d5249b7144aa6ed5cdad7ba15c, type: 3}
+  - {fileID: 7884437523827688460, guid: ab79cad2757ddbc44b23079f85509bbd, type: 3}
+  - {fileID: 7336724184452586669, guid: edbd1470204f301488a25ceb3474cb99, type: 3}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
